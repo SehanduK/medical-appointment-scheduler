@@ -6,6 +6,7 @@ This Medical Appointment Scheduling System is a web-based application designed t
 
 (NOTE : This is a brief explanation about the system that I got from the AI,so we can get an idea about how this system works. Finally we should discuss and add more things to develop it as well.)
 
+
 Main Purpose
 
 The main purpose of the system is to:
@@ -14,6 +15,7 @@ I. Reduce waiting time for patients
 II. Simplify appointment booking   
 III. Improve hospital management efficiency   
 IV. Provide organized records for doctors and patients   
+
 
 
 Main Users
@@ -37,7 +39,9 @@ II.Manage schedules
 III.Monitor all appointments in the system   
 
 
+
 Key Features
+
 
 I. User registration and login   
 II. Doctor listing and specialization details   
