@@ -20,7 +20,8 @@ public class LoginController {
                               Model model) {
 
         if ("admin".equals(username) && "123".equals(password)) {
-            return "redirect:/admin/add-doctor";
+            // Change this line to redirect to the dashboard mapping
+            return "redirect:/admin/dashboard";
         } else {
             model.addAttribute("error", "Invalid Credentials. Access Denied.");
             return "login";

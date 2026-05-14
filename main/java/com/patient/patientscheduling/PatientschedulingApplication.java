@@ -14,7 +14,6 @@ public class PatientschedulingApplication {
     @Bean
     public CommandLineRunner demoData(DoctorRepository doctorRepo) {
         return args -> {
-
             System.out.println("✅ Sample data added successfully!");
         };
     }

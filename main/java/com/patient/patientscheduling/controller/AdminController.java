@@ -22,21 +22,19 @@ public class AdminController {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
-    // GET /admin/add-doctor
-    @GetMapping("/add-doctor")
-    public String showAdminPage(Model model) {
-        // Doctor form object
-        if (!model.containsAttribute("doctor")) {
-            model.addAttribute("doctor", new Doctor());
-        }
-        // Prescription form object — needed for the prescription section
-        if (!model.containsAttribute("prescription")) {
-            model.addAttribute("prescription", new Prescription());
-        }
+    @GetMapping("/dashboard")
+    public String showAdminDashboard() {
         return "admin";
     }
 
-    // POST /admin/save-doctor
+    @GetMapping("/add-doctor")
+    public String showAddDoctorPage(Model model) {
+        if (!model.containsAttribute("doctor")) {
+            model.addAttribute("doctor", new Doctor());
+        }
+        return "add-doctor";
+    }
+
     @PostMapping("/save-doctor")
     public String saveDoctor(@ModelAttribute("doctor") Doctor doctor,
                              RedirectAttributes redirectAttributes) {
@@ -57,7 +55,6 @@ public class AdminController {
         return "redirect:/admin/add-doctor?success=true";
     }
 
-    // GET /admin/all-doctors
     @GetMapping("/all-doctors")
     public String showAllDoctorsPage(Model model) {
         List<Doctor> list = doctorRepository.findAll();
@@ -65,7 +62,6 @@ public class AdminController {
         return "edit-doctor";
     }
 
-    // GET /admin/delete/{id}
     @GetMapping("/delete/{id}")
     public String deleteDoctor(@PathVariable("id") Long id) {
         doctorRepository.deleteById(id);

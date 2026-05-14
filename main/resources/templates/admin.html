@@ -1,109 +1,135 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Admin Portal</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Hub | Administrative Selection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #f0f2f5;
-            min-height: 100vh;
+        body { font-family: 'Inter', sans-serif; background-color: #020617; }
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* Split Screen Logic */
+        .split-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .split-side {
+            position: relative;
+            flex: 1;
+            transition: flex 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            overflow: hidden;
         }
-        .portal-wrapper {
+
+        .split-side:hover {
+            flex: 1.5;
+        }
+
+        /* Overlay Gradients */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.3), rgba(2, 6, 23, 0.9));
+            z-index: 10;
+            transition: opacity 0.5s;
+        }
+
+        .split-side:hover .overlay {
+            opacity: 0.7;
+        }
+
+        /* Background Images (Simulated with colors/patterns) */
+        .bg-doctor { background-color: #064e3b; } /* Deep Emerald */
+        .bg-prescription { background-color: #1e3a8a; } /* Deep Blue */
+
+        .content {
+            position: relative;
+            z-index: 20;
             text-align: center;
-            width: 100%;
-            max-width: 800px;
-            padding: 20px;
+            padding: 2rem;
+            transition: transform 0.5s;
         }
-        .portal-wrapper h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 6px;
+
+        .split-side:hover .content {
+            transform: scale(1.1);
         }
-        .portal-wrapper p {
-            color: #6c757d;
-            margin-bottom: 40px;
+
+        .icon-circle {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.5s;
         }
-        .option-card {
-            border: none;
-            border-radius: 16px;
-            padding: 40px 30px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            display: block;
-            color: inherit;
-            height: 100%;
+
+        .split-side:hover .icon-circle {
+            border-color: white;
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
         }
-        .option-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-            color: inherit;
-        }
-        .option-card.doctor {
-            background: linear-gradient(135deg, #1d6efd22, #ffffff);
-            border: 2px solid #1d6efd;
-        }
-        .option-card.prescription {
-            background: linear-gradient(135deg, #19875422, #ffffff);
-            border: 2px solid #198754;
-        }
-        .option-icon {
-            font-size: 3.5rem;
-            margin-bottom: 16px;
-        }
-        .option-card h4 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .option-card p {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin: 0;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 40px;
-            color: #6c757d;
-            font-size: 13px;
-            text-decoration: none;
-        }
-        .back-link:hover { color: #333; }
     </style>
 </head>
-<body>
+<body class="text-slate-200">
 
-<div class="portal-wrapper">
-    <h2>⚕️ Admin Portal</h2>
-    <p>Choose an option to manage</p>
+<div class="split-container">
 
-    <div class="row g-4 justify-content-center">
-
-        <!-- Card 1: Add a New Doctor -->
-        <div class="col-md-5">
-            <a th:href="@{/admin/add-doctor}" class="option-card doctor">
-                <div class="option-icon">🩺</div>
-                <h4>Add a New Doctor</h4>
-                <p>Register a new doctor with their name and specialization</p>
-            </a>
+    <!-- Option 1: Add Doctor -->
+    <a th:href="@{/admin/add-doctor}" class="split-side bg-doctor">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="icon-circle">
+                <span class="text-4xl">🩺</span>
+            </div>
+            <span class="text-emerald-400 font-bold tracking-[0.4em] uppercase text-xs mb-2 block">System Registry</span>
+            <h2 class="serif text-4xl md:text-6xl text-white mb-4">Add or Check <br>Doctor</h2>
+<!--            <p class="text-slate-300 max-w-xs mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-700">-->
+            <p class="text-slate-300 max-w-xs mx-auto">
+                Onboard elite medical staff to the concierge network.
+            </p>
+            <div class="mt-8 py-3 px-8 border border-white/20 inline-block text-xs tracking-widest uppercase hover:bg-white hover:text-black transition">
+                Enter Module
+            </div>
         </div>
+    </a>
 
-        <!-- Card 2: Add a Prescription -->
-        <div class="col-md-5">
-            <a th:href="@{/prescription/add}" class="option-card prescription">
-                <div class="option-icon">💊</div>
-                <h4>Add a Prescription</h4>
-                <p>Issue a new prescription for a patient with medication details</p>
-            </a>
+    <!-- Option 2: Add Prescription -->
+    <a th:href="@{/prescription/add}" class="split-side bg-prescription">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="icon-circle">
+                <span class="text-4xl">💊</span>
+            </div>
+            <span class="text-blue-400 font-bold tracking-[0.4em] uppercase text-xs mb-2 block">Patient Care</span>
+            <h2 class="serif text-4xl md:text-6xl text-white mb-4">Add or Check <br>Prescription</h2>
+            <p class="text-slate-300 max-w-xs mx-auto">
+                Manage private medication and digital health records.
+            </p>
+            <div class="mt-8 py-3 px-8 border border-white/20 inline-block text-xs tracking-widest uppercase hover:bg-white hover:text-black transition">
+                Enter Module
+            </div>
         </div>
+    </a>
 
-    </div>
-
-    <a href="/" class="back-link">← Return to Public Portal</a>
 </div>
+
+<!-- Floating Back Button -->
+<a href="/" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 text-slate-500 hover:text-white transition text-[10px] tracking-[0.5em] uppercase bg-black/20 backdrop-blur-md px-6 py-2 rounded-full border border-white/10">
+    Return to Life Hub
+</a>
 
 </body>
 </html>
