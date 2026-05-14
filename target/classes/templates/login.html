@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Verification | HealthCare Luxe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top right, #1e293b, #020617);
+        }
+        .serif { font-family: 'Playfair Display', serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .input-field {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #10b981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+            outline: none;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-gold:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6">
+
+<div class="w-full max-w-md">
+    <!-- Logo/Header -->
+    <div class="text-center mb-10">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-500 rounded-2xl mb-4 shadow-2xl">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+        </div>
+        <h1 class="serif text-3xl text-white tracking-wide">System Access</h1>
+        <p class="text-slate-500 text-sm mt-2 uppercase tracking-[0.2em]">Authorized Personnel Only</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="glass-panel rounded-3xl p-10 relative overflow-hidden">
+        <!-- Subtle Decorative Flare -->
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full"></div>
+
+        <div th:if="${error}" class="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center">
+            <span th:text="${error}">Invalid credentials provided.</span>
+        </div>
+
+        <form th:action="@{/verify-admin}" method="post" class="space-y-6">
+            <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 ml-1">Identity</label>
+                <input type="text" name="username"
+                       class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-slate-600"
+                       placeholder="Enter Username" required>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 ml-1">Passkey</label>
+                <input type="password" name="password"
+                       class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-slate-600"
+                       placeholder="••••••••" required>
+            </div>
+
+            <div class="pt-2">
+                <button type="submit" class="btn-gold w-full py-4 rounded-xl text-white font-bold tracking-wide shadow-lg">
+                    Authenticate Access
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-8 text-center">
+            <a href="/" class="text-slate-500 hover:text-emerald-400 text-xs transition-colors duration-300 flex items-center justify-center">
+                <svg class="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Return to Public Portal
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer Note -->
+    <p class="text-center mt-10 text-slate-600 text-[10px] uppercase tracking-widest">
+        &copy; 2026 Health Life Security Protocol
+    </p>
+</div>
+
+</body>
+</html>

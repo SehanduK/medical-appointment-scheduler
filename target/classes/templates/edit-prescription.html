@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Prescription Management - All Prescriptions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+<h2>All Prescriptions</h2>
+<hr>
+
+<div th:if="${param.deleted}" style="color: green;">Prescription deleted successfully!</div>
+<div th:if="${param.updated}" style="color: green;">Prescription updated successfully!</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+    <tr>
+        <th>ID</th>
+        <th>Patient Name</th>
+        <th>Doctor Name</th>
+        <th>Medication</th>
+        <th>Dosage</th>
+        <th>Date Issued</th>
+        <th>Notes</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${allPrescriptions}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.patientName}"></td>
+        <td th:text="${p.doctorName}"></td>
+        <td th:text="${p.medication}"></td>
+        <td th:text="${p.dosage}"></td>
+        <td th:text="${p.dateIssued}"></td>
+        <td th:text="${p.notes}"></td>
+        <td>
+            <a th:href="@{/prescription/edit/{id}(id=${p.id})}" class="btn btn-warning btn-sm">Edit</a>
+            <a th:href="@{/prescription/delete/{id}(id=${p.id})}" class="btn btn-danger btn-sm"
+               onclick="return confirm('Delete this prescription?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/prescription/add}" class="btn btn-primary">Add New Prescription</a>
+<a href="/" class="btn btn-outline-secondary">Return to Portal</a>
+
+</body>
+</html>
