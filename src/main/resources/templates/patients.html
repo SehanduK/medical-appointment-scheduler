@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+
+<h2 class="mb-4">🏥 Patient Management</h2>
+
+<!-- Error Message -->
+<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+<!-- Add Patient Form -->
+<div class="card p-3 mb-4">
+    <h5>Add New Patient</h5>
+    <form method="post" action="/patients/add">
+        <div class="row g-2">
+            <div class="col"><input name="id" class="form-control" placeholder="Patient ID" required></div>
+            <div class="col"><input name="name" class="form-control" placeholder="Full Name" required></div>
+            <div class="col"><input name="phone" class="form-control" placeholder="Phone" pattern="[0-9]{10}" maxlength="10" required></div>
+            <div class="col"><input name="age" class="form-control" placeholder="Age" type="number" min="1" max="99" oninput="if(this.value.length > 2) this.value = this.value.slice(0,2);" required></div>
+            <div class="col"><button class="btn btn-primary w-100">Add</button></div>
+        </div>
+    </form>
+</div>
+
+<!-- Update Form (shows when edit clicked) -->
+<div th:if="${patient}" class="card p-3 mb-4 border-warning">
+    <h5>✏️ Update Patient</h5>
+    <form method="post" action="/patients/update">
+        <div class="row g-2">
+            <div class="col"><input name="id" class="form-control" th:value="${patient.id}" readonly></div>
+            <div class="col"><input name="name" class="form-control" th:value="${patient.name}" required></div>
+            <div class="col"><input name="phone" class="form-control" th:value="${patient.phone}" pattern="[0-9]{10}" maxlength="2" required></div>
+            <div class="col"><input name="age" class="form-control" th:value="${patient.age}" type="number" min="1" max="99" required></div>
+            <div class="col"><button class="btn btn-warning w-100">Update</button></div>
+        </div>
+    </form>
+</div>
+
+<!-- Patient Table -->
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Age</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${patients}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.phone}"></td>
+        <td th:text="${p.age}"></td>
+        <td>
+            <a th:href="@{/patients/edit/{id}(id=${p.id})}" class="btn btn-warning btn-sm">Edit</a>
+            <a th:href="@{/patients/delete/{id}(id=${p.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
