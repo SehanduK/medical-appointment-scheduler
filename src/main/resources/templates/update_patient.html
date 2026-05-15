@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Patient</title>
+</head>
+<body>
+
+<h2>Update Patient</h2>
+
+<form action="#" th:action="@{/savePatient}" th:object="${patient}" method="POST">
+
+    <input type="hidden" th:field="*{id}" />
+
+    Name:
+    <input type="text" th:field="*{name}" />
+    <br><br>
+
+    Age:
+    <input type="number" th:field="*{age}" />
+    <br><br>
+
+    Gender:
+    <input type="text" th:field="*{gender}" />
+    <br><br>
+
+    Contact:
+    <input type="text" th:field="*{contact}" />
+    <br><br>
+
+    <button type="submit">Update</button>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Patient</title>
+</head>
+<body>
+
+<h2>Add Patient</h2>
+
+<form action="#" th:action="@{/savePatient}" th:object="${patient}" method="POST">
+
+    Name:
+    <input type="text" th:field="*{name}" />
+    <br><br>
+
+    Age:
+    <input type="number"
+           th:field="*{age}"
+           min="1"
+           max="99"
+           oninput="if(this.value.length > 2) this.value = this.value.slice(0,2)" />
+    <br><br>
+
+    Gender:
+    <input type="text" th:field="*{gender}" />
+    <br><br>
+
+    Contact:
+    <input type="text"
+           th:field="*{contact}"
+           maxlength="10"
+           pattern="[0-9]{10}"
+           title="Contact number must be 10 digits" />
+    <br><br>
+
+    <button type="submit">Save</button>
+
+</form>
+
+</body>
+</html>

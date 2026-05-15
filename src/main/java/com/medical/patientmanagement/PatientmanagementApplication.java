@@ -1,14 +1,13 @@
-package com.medical.MedicalAppointmentSystem;
+package com.medical.patientmanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MedicalAppointmentSystemApplication {
+public class PatientmanagementApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MedicalAppointmentSystemApplication.class, args);
+		SpringApplication.run(PatientmanagementApplication.class, args);
 	}
 
 }
-

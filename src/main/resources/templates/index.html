@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient Management System</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        body{
+            background: #eef3ff;
+            font-family: Arial, sans-serif;
+        }
+
+        .top-bar{
+            background: linear-gradient(to right,#005bea,#3c8ce7);
+            color: white;
+            padding: 30px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .top-bar h1{
+            font-weight: bold;
+        }
+
+        .main-card{
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .table{
+            margin-top: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .table thead{
+            background: #f4f7ff;
+        }
+
+        .table th{
+            color: #0d6efd;
+            font-size: 18px;
+            padding: 20px;
+        }
+
+        .table td{
+            padding: 20px;
+            vertical-align: middle;
+        }
+
+        .btn-add{
+            background: #0d6efd;
+            color: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-weight: bold;
+        }
+
+        .btn-update{
+            background: #0d6efd;
+            color: white;
+            border-radius: 10px;
+            padding: 8px 15px;
+            text-decoration: none;
+        }
+
+        .btn-delete{
+            background: #dc3545;
+            color: white;
+            border-radius: 10px;
+            padding: 8px 15px;
+            text-decoration: none;
+        }
+
+        .badge-age{
+            background: #d4f5dd;
+            color: green;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .male{
+            background: #dbe9ff;
+            color: #005bea;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .female{
+            background: #ffe0ef;
+            color: #e83e8c;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="top-bar">
+
+    <div class="container">
+
+        <h1>
+            <i class="bi bi-heart-pulse-fill"></i>
+            Patient Management System
+        </h1>
+
+        <p>Manage patient information easily</p>
+
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="main-card">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h2>
+                <i class="bi bi-people-fill"></i>
+                Patient List
+            </h2>
+
+            <a href="/showNewPatientForm" class="btn btn-add">
+                <i class="bi bi-plus-circle"></i>
+                Add Patient
+            </a>
+
+        </div>
+
+        <table class="table table-bordered text-center">
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Contact</th>
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="patient : ${patients}">
+
+                <td th:text="${patient.id}"></td>
+
+                <td th:text="${patient.name}"></td>
+
+                <td>
+                    <span class="badge-age"
+                          th:text="${patient.age}">
+                    </span>
+                </td>
+
+                <td>
+
+                    <span th:if="${patient.gender == 'Male'}"
+                          class="male">
+                        Male
+                    </span>
+
+                    <span th:if="${patient.gender == 'Female'}"
+                          class="female">
+                        Female
+                    </span>
+
+                </td>
+
+                <td th:text="${patient.contact}"></td>
+
+                <td>
+
+                    <a th:href="@{/showFormForUpdate/{id}(id=${patient.id})}"
+                       class="btn-update">
+
+                        <i class="bi bi-pencil-square"></i>
+                        Update
+
+                    </a>
+
+                    <a th:href="@{/deletePatient/{id}(id=${patient.id})}"
+                       class="btn-delete">
+
+                        <i class="bi bi-trash"></i>
+                        Delete
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
