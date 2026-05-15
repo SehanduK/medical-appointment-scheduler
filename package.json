@@ -1,0 +1,9 @@
+{
+  "name": "medical-records",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "mvn -f MedicalAppointmentSystem/pom.xml spring-boot:run",
+    "start": "mvn -f MedicalAppointmentSystem/pom.xml spring-boot:run"
+  }
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prescription Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --page-bg: #ffffff;
+            --page-text: #1f2937;
+            --muted-text: #6b7280;
+            --line: #d8dce3;
+            --primary: #1b74e4;
+            --primary-hover: #165fc0;
+            --secondary: #7b8794;
+            --secondary-hover: #687381;
+        }
+
+        body {
+            background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 42%);
+            color: var(--page-text);
+            font-family: 'Manrope', 'Segoe UI', sans-serif;
+        }
+
+        .page-shell {
+            max-width: 1100px;
+            margin: 56px auto 72px;
+            padding: 0 24px;
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 2.6vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--line);
+            margin-bottom: 28px;
+        }
+
+        .field-group {
+            margin-bottom: 18px;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--muted-text);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border-color: #dfe3ea;
+            border-radius: 7px;
+            box-shadow: none;
+            min-height: 42px;
+            padding-left: 14px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(27, 116, 228, 0.12);
+        }
+
+        textarea.form-control {
+            min-height: 92px;
+            resize: vertical;
+        }
+
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            padding: 0.55rem 1rem;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+
+        .btn-secondary-custom {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #fff;
+            padding: 0.55rem 1rem;
+            font-weight: 600;
+        }
+
+        .btn-secondary-custom:hover,
+        .btn-secondary-custom:focus {
+            background: var(--secondary-hover);
+            border-color: var(--secondary-hover);
+            color: #fff;
+        }
+
+        .btn-outline-custom {
+            border-color: #cfd5dd;
+            color: #4b5563;
+            background: #fff;
+            padding: 0.55rem 1rem;
+            font-weight: 600;
+        }
+
+        .btn-outline-custom:hover,
+        .btn-outline-custom:focus {
+            background: #f4f6f9;
+            color: #374151;
+        }
+
+        .form-wrap {
+            max-width: 1180px;
+        }
+
+        @media (max-width: 768px) {
+            .page-shell {
+                margin-top: 28px;
+                padding: 0 16px;
+            }
+
+            .action-row {
+                flex-direction: column;
+            }
+
+            .action-row .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-shell">
+    <div class="form-wrap mx-auto">
+        <h1 class="page-title">Prescription Management: Add New Prescription</h1>
+        <div class="divider"></div>
+
+        <form th:action="@{/prescription/add}" th:object="${recordForm}" method="post" autocomplete="off">
+            <input type="hidden" th:field="*{recordId}" />
+
+            <div class="field-group">
+                <label for="patientName" class="field-label">Patient Name:</label>
+                <input id="patientName" type="text" th:field="*{patientName}" class="form-control" placeholder="e.g. John Perera" required />
+            </div>
+
+            <div class="field-group">
+                <label for="doctorName" class="field-label">Doctor Name:</label>
+                <input id="doctorName" type="text" th:field="*{doctorName}" class="form-control" placeholder="e.g. Dr. Smith" required />
+            </div>
+
+            <div class="field-group">
+                <label for="medication" class="field-label">Medication:</label>
+                <input id="medication" type="text" th:field="*{medication}" class="form-control" placeholder="e.g. Amoxicillin" required />
+            </div>
+
+            <div class="field-group">
+                <label for="dosage" class="field-label">Dosage:</label>
+                <input id="dosage" type="text" th:field="*{dosage}" class="form-control" placeholder="e.g. 500mg twice daily" required />
+            </div>
+
+            <div class="field-group">
+                <label for="dateIssued" class="field-label">Date Issued:</label>
+                <input id="dateIssued" type="date" th:field="*{dateIssued}" class="form-control" required />
+            </div>
+
+            <div class="field-group">
+                <label for="notes" class="field-label">Notes:</label>
+                <textarea id="notes" th:field="*{notes}" class="form-control" placeholder="Additional notes..."></textarea>
+            </div>
+
+            <div class="action-row">
+                <button type="submit" class="btn btn-primary">Save Prescription</button>
+                <a th:href="@{/records}" class="btn btn-secondary-custom">View All Prescriptions</a>
+                <a th:href="@{/}" class="btn btn-outline-custom">Return to Portal</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

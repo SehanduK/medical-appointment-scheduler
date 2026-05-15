@@ -1,0 +1,4 @@
+com\example\medicalrecords\service\MedicalRecordService.class
+com\example\medicalrecords\controller\MedicalRecordController.class
+com\example\medicalrecords\model\MedicalRecord.class
+com\example\medicalrecords\MedicalAppointmentSystemApplication.class
