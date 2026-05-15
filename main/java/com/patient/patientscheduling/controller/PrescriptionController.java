@@ -17,7 +17,7 @@ public class PrescriptionController {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
-    // ── CREATE ── GET /prescription/add
+
     @GetMapping("/add")
     public String showAddPage(Model model) {
         if (!model.containsAttribute("prescription")) {
@@ -26,12 +26,12 @@ public class PrescriptionController {
         return "prescriptions";
     }
 
-    // ── CREATE ── POST /prescription/save
+
     @PostMapping("/save")
     public String savePrescription(@ModelAttribute("prescription") Prescription prescription,
                                    RedirectAttributes redirectAttributes) {
 
-        // Mandatory field check
+
         if (prescription.getPatientName() == null || prescription.getPatientName().trim().isEmpty() ||
                 prescription.getDoctorName() == null || prescription.getDoctorName().trim().isEmpty() ||
                 prescription.getMedication() == null || prescription.getMedication().trim().isEmpty() ||
@@ -39,7 +39,7 @@ public class PrescriptionController {
             return "redirect:/prescription/add?error=missing_fields";
         }
 
-        // Duplicate check
+
         boolean exists = prescriptionRepository.existsByPatientNameAndMedication(
                 prescription.getPatientName(),
                 prescription.getMedication()
@@ -53,7 +53,7 @@ public class PrescriptionController {
         return "redirect:/prescription/add?success=true";
     }
 
-    // ── READ ── GET /prescription/all
+
     @GetMapping("/all")
     public String showAllPrescriptions(Model model) {
         List<Prescription> list = prescriptionRepository.findAll();
@@ -61,7 +61,7 @@ public class PrescriptionController {
         return "edit-prescription";
     }
 
-    // ── UPDATE ── GET /prescription/edit/{id}
+
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
         Prescription prescription = prescriptionRepository.findById(id)
@@ -70,7 +70,7 @@ public class PrescriptionController {
         return "update-prescription";
     }
 
-    // ── UPDATE ── POST /prescription/update/{id}
+
     @PostMapping("/update/{id}")
     public String updatePrescription(@PathVariable("id") Long id,
                                      @ModelAttribute("prescription") Prescription prescription) {
@@ -79,7 +79,7 @@ public class PrescriptionController {
         return "redirect:/prescription/all?updated";
     }
 
-    // ── DELETE ── GET /prescription/delete/{id}
+
     @GetMapping("/delete/{id}")
     public String deletePrescription(@PathVariable("id") Long id) {
         prescriptionRepository.deleteById(id);
