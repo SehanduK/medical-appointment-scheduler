@@ -14,55 +14,55 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border-top: 4px solid #1d6efd;
         }
-        .form-card h3 {
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
+        .form-card h3 { font-weight: 700; margin-bottom: 6px; }
     </style>
 </head>
 <body>
-
 <div class="form-card">
     <h3>Add a New Doctor</h3>
     <p class="text-muted mb-4">Fill in the details below to register a new doctor</p>
 
     <div th:if="${param.success}" class="alert alert-success">Doctor saved successfully!</div>
-    <div th:if="${param.error != null and param.error[0] == 'duplicate'}" class="alert alert-danger">
-        Error: This doctor already exists with the same specialization.
-    </div>
     <div th:if="${param.error != null and param.error[0] == 'missing_fields'}" class="alert alert-danger">
-        Error: Both Name and Specialization are required.
+        Error: Doctor name is required.
     </div>
 
     <form th:action="@{/admin/save-doctor}" th:object="${doctor}" method="post">
 
+        <!-- Doctor Name -->
         <div class="mb-3">
             <label class="form-label fw-semibold">Doctor Name:</label>
             <input type="text" th:field="*{name}" class="form-control"
                    placeholder="Dr. John Smith" required>
         </div>
 
+        <!-- Department Dropdown -->
         <div class="mb-3">
-            <label class="form-label fw-semibold">Specialization:</label>
-            <p class="small text-muted mb-1">Select an existing one or type a new specialty.</p>
-            <input type="text" th:field="*{specialization}" class="form-control"
-                   list="specialtyOptions" placeholder="e.g. Cardiology" required>
-            <datalist id="specialtyOptions">
-                <option value="Cardiologist">
-                <option value="Dermatologist">
-                <option value="Neurologist">
-                <option value="General Physician">
-            </datalist>
+            <label class="form-label fw-semibold">Department:</label>
+            <select name="departmentId" class="form-select" required>
+                <option value="" disabled selected>Select a department...</option>
+                <option th:each="dept : ${departments}"
+                        th:value="${dept.id}"
+                        th:text="${dept.name}">
+                </option>
+            </select>
+            <div th:if="${departments == null or departments.isEmpty()}" class="alert alert-warning mt-2 py-2 small">
+                No departments found.
+                <a th:href="@{/admin/departments/new}" class="alert-link">Create one first →</a>
+            </div>
+            <div th:unless="${departments == null or departments.isEmpty()}" class="mt-1">
+                <a th:href="@{/admin/departments/new}" class="small text-primary">+ Add a new department</a>
+            </div>
         </div>
 
         <div class="d-flex gap-2 flex-wrap mt-4">
             <button type="submit" class="btn btn-primary">Save Doctor</button>
             <a th:href="@{/admin/all-doctors}" class="btn btn-outline-secondary">View All Doctors</a>
+            <a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary">Back to Dashboard</a>
             <a href="/" class="btn btn-outline-secondary">Return to Portal</a>
         </div>
 
     </form>
 </div>
-
 </body>
 </html>

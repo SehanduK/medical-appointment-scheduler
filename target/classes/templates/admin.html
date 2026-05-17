@@ -1,109 +1,190 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Admin Portal</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Hub | Administrative Selection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=600;800&family=Inter:wght=300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #f0f2f5;
-            min-height: 100vh;
+        body { font-family: 'Inter', sans-serif; background-color: #020617; }
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* Split Screen Logic supporting 3 items dynamically */
+        .split-container {
+            display: flex;
+            height: calc(100vh - 140px); /* Leaves clean, proportional space for ledger */
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .split-side {
+            position: relative;
+            flex: 1;
+            transition: flex 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            overflow: hidden;
         }
-        .portal-wrapper {
+
+        .split-side:hover {
+            flex: 1.4; /* Slightly expanded to draw dramatic focus over 3 columns */
+        }
+
+        /* Overlay Gradients */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.95));
+            z-index: 10;
+            transition: opacity 0.5s;
+        }
+
+        .split-side:hover .overlay {
+            opacity: 0.6;
+        }
+
+        /* Background Colors matching the luxury aesthetic */
+        .bg-doctor { background-color: #032d20; border-right: 1px solid rgba(255,255,255,0.03); }
+        .bg-prescription { background-color: #0f1c3f; border-right: 1px solid rgba(255,255,255,0.03); }
+        .bg-department { background-color: #2e1049; } /* Deep luxury purple color tone */
+
+        .content {
+            position: relative;
+            z-index: 20;
             text-align: center;
-            width: 100%;
-            max-width: 800px;
-            padding: 20px;
+            padding: 2rem;
+            transition: transform 0.5s;
         }
-        .portal-wrapper h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 6px;
+
+        .split-side:hover .content {
+            transform: scale(1.05);
         }
-        .portal-wrapper p {
-            color: #6c757d;
-            margin-bottom: 40px;
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(10px);
+            transition: all 0.5s;
         }
-        .option-card {
-            border: none;
-            border-radius: 16px;
-            padding: 40px 30px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            display: block;
-            color: inherit;
-            height: 100%;
+
+        .split-side:hover .icon-circle {
+            border-color: white;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
         }
-        .option-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-            color: inherit;
-        }
-        .option-card.doctor {
-            background: linear-gradient(135deg, #1d6efd22, #ffffff);
-            border: 2px solid #1d6efd;
-        }
-        .option-card.prescription {
-            background: linear-gradient(135deg, #19875422, #ffffff);
-            border: 2px solid #198754;
-        }
-        .option-icon {
-            font-size: 3.5rem;
-            margin-bottom: 16px;
-        }
-        .option-card h4 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .option-card p {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin: 0;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 40px;
-            color: #6c757d;
-            font-size: 13px;
-            text-decoration: none;
-        }
-        .back-link:hover { color: #333; }
     </style>
 </head>
-<body>
+<body class="text-slate-200 min-h-screen flex flex-col justify-between overflow-x-hidden">
 
-<div class="portal-wrapper">
-    <h2>⚕️ Admin Portal</h2>
-    <p>Choose an option to manage</p>
+<div class="split-container">
 
-    <div class="row g-4 justify-content-center">
+    <a th:href="@{/admin/add-doctor}" class="split-side bg-doctor group">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="icon-circle">
+                <span class="text-3xl">🩺</span>
+            </div>
+            <span class="text-emerald-400 font-bold tracking-[0.4em] uppercase text-[10px] mb-2 block">System Registry</span>
+            <h2 class="serif text-3xl md:text-4xl text-white mb-3 tracking-tight">Add or Check <br>Doctors</h2>
+            <p class="text-slate-400 text-xs max-w-xs mx-auto font-light leading-relaxed">
+                Onboard medical specialists and manage elite practitioner availability.
+            </p>
+            <div class="mt-6 py-2.5 px-6 border border-emerald-500/30 group-hover:border-emerald-400 text-emerald-400 group-hover:bg-emerald-400 group-hover:text-slate-950 inline-block text-[10px] tracking-widest uppercase transition-all duration-300 rounded-lg">
+                Enter Module
+            </div>
+        </div>
+    </a>
 
-        <!-- Card 1: Add a New Doctor -->
-        <div class="col-md-5">
-            <a th:href="@{/admin/add-doctor}" class="option-card doctor">
-                <div class="option-icon">🩺</div>
-                <h4>Add a New Doctor</h4>
-                <p>Register a new doctor with their name and specialization</p>
+    <a th:href="@{/prescription/add}" class="split-side bg-prescription group">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="icon-circle">
+                <span class="text-3xl">💊</span>
+            </div>
+            <span class="text-blue-400 font-bold tracking-[0.4em] uppercase text-[10px] mb-2 block">Patient Care</span>
+            <h2 class="serif text-3xl md:text-4xl text-white mb-3 tracking-tight">Add or Check <br>Prescriptions</h2>
+            <p class="text-slate-400 text-xs max-w-xs mx-auto font-light leading-relaxed">
+                Formulate treatment blueprints and manage digitized health logs.
+            </p>
+            <div class="mt-6 py-2.5 px-6 border border-blue-500/30 group-hover:border-blue-400 text-blue-400 group-hover:bg-blue-400 group-hover:text-slate-950 inline-block text-[10px] tracking-widest uppercase transition-all duration-300 rounded-lg">
+                Enter Module
+            </div>
+        </div>
+    </a>
+
+    <a th:href="@{/admin/departments}" class="split-side bg-department group">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="icon-circle">
+                <span class="text-3xl">🏢</span>
+            </div>
+            <span class="text-purple-400 font-bold tracking-[0.4em] uppercase text-[10px] mb-2 block">Facility Management</span>
+            <h2 class="serif text-3xl md:text-4xl text-white mb-3 tracking-tight">Add or Check <br>Departments</h2>
+            <p class="text-slate-400 text-xs max-w-xs mx-auto font-light leading-relaxed">
+                Configure clinical units, medical wards, and organize structural hospital wings.
+            </p>
+            <div class="mt-6 py-2.5 px-6 border border-purple-500/30 group-hover:border-purple-400 text-purple-400 group-hover:bg-purple-400 group-hover:text-slate-950 inline-block text-[10px] tracking-widest uppercase transition-all duration-300 rounded-lg">
+                Enter Module
+            </div>
+        </div>
+    </a>
+
+</div>
+
+<section class="w-full bg-slate-900 border-t border-slate-800 p-6 z-30 shadow-2xl">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 items-center justify-between">
+
+        <div class="w-full md:w-1/4 shrink-0 text-center md:text-left">
+            <div class="flex items-center justify-center md:justify-start gap-2 mb-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-widest">Active Intake Directory</span>
+            </div>
+            <h3 class="serif text-xl text-white">Channeling Ledger</h3>
+
+            <a href="/" class="mt-4 inline-flex text-slate-400 hover:text-white transition text-[9px] tracking-[0.3em] uppercase bg-slate-950 border border-slate-800 hover:border-slate-700 px-4 py-2 rounded-xl">
+                Return to Life Hub
             </a>
         </div>
 
-        <!-- Card 2: Add a Prescription -->
-        <div class="col-md-5">
-            <a th:href="@{/prescription/add}" class="option-card prescription">
-                <div class="option-icon">💊</div>
-                <h4>Add a Prescription</h4>
-                <p>Issue a new prescription for a patient with medication details</p>
-            </a>
+        <div class="w-full md:w-3/4 overflow-x-auto whitespace-nowrap pb-2">
+            <div class="inline-flex gap-4">
+
+                <th:block th:if="${patients != null}">
+                    <div th:each="p : ${patients}" class="inline-block bg-slate-950 border border-slate-800/80 rounded-xl p-4 min-w-[240px]">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-mono text-slate-500" th:text="${'#PT-' + p.id}">#PT-0</span>
+                            <span class="text-[10px] px-2 py-0.5 bg-slate-900 border border-slate-800 rounded text-slate-400" th:text="${p.gender}">-</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-white truncate max-w-[180px]" th:text="${p.name}">Patient Name</h4>
+                        <p class="text-slate-400 text-xs mt-1 font-mono" th:text="${p.contact}">-</p>
+                        <div class="mt-2 pt-2 border-t border-slate-900 flex justify-between text-[10px] text-slate-500">
+                            <span>Age: <th:block th:text="${p.age}"></th:block></span>
+                            <span class="text-emerald-400 font-medium" th:text="${p.doctorId != null ? 'DOC ID: ' + p.doctorId : 'OPD Staff'}"></span>
+                        </div>
+                    </div>
+                </th:block>
+
+                <th:block th:if="${patients == null or #lists.isEmpty(patients)}">
+                    <div class="text-slate-500 text-xs italic py-6 px-8 border border-dashed border-slate-800 rounded-xl min-w-[400px] text-center flex items-center justify-center">
+                        No active queue profiles registered in database instance.
+                    </div>
+                </th:block>
+
+            </div>
         </div>
 
     </div>
-
-    <a href="/" class="back-link">← Return to Public Portal</a>
-</div>
+</section>
 
 </body>
 </html>

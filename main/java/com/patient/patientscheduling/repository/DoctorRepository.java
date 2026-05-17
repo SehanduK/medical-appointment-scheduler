@@ -6,11 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-    boolean existsByNameAndSpecialization(String name, String specialization);
 
-    List<Doctor> findBySpecialization(String specialty);
+    List<Doctor> findByDepartmentId(Long departmentId);
 }

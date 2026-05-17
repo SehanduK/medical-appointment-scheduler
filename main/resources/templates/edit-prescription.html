@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -10,15 +9,15 @@
 <h2>All Prescriptions</h2>
 <hr>
 
-<div th:if="${param.deleted}" style="color: green;">Prescription deleted successfully!</div>
-<div th:if="${param.updated}" style="color: green;">Prescription updated successfully!</div>
+<div th:if="${param.deleted}" class="alert alert-success">Prescription deleted successfully!</div>
+<div th:if="${param.updated}" class="alert alert-success">Prescription updated successfully!</div>
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
     <tr>
         <th>ID</th>
         <th>Patient Name</th>
-        <th>Doctor Name</th>
+        <th>Doctor ID</th>
         <th>Medication</th>
         <th>Dosage</th>
         <th>Date Issued</th>
@@ -29,15 +28,19 @@
     <tbody>
     <tr th:each="p : ${allPrescriptions}">
         <td th:text="${p.id}"></td>
-        <td th:text="${p.patientName}"></td>
-        <td th:text="${p.doctorName}"></td>
+        <!-- p.patient.name — correct field from Patient.java -->
+        <td th:text="${p.patient != null ? p.patient.name : 'N/A'}"></td>
+        <!-- doctorId is a plain Long on Patient, not a relationship object -->
+        <td th:text="${p.patient != null ? p.patient.doctorId : 'N/A'}"></td>
         <td th:text="${p.medication}"></td>
         <td th:text="${p.dosage}"></td>
         <td th:text="${p.dateIssued}"></td>
         <td th:text="${p.notes}"></td>
         <td>
-            <a th:href="@{/prescription/edit/{id}(id=${p.id})}" class="btn btn-warning btn-sm">Edit</a>
-            <a th:href="@{/prescription/delete/{id}(id=${p.id})}" class="btn btn-danger btn-sm"
+            <a th:href="@{/prescription/edit/{id}(id=${p.id})}"
+               class="btn btn-warning btn-sm">Edit</a>
+            <a th:href="@{/prescription/delete/{id}(id=${p.id})}"
+               class="btn btn-danger btn-sm"
                onclick="return confirm('Delete this prescription?')">Delete</a>
         </td>
     </tr>
@@ -45,6 +48,7 @@
 </table>
 
 <a th:href="@{/prescription/add}" class="btn btn-primary">Add New Prescription</a>
+<a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary">Dashboard</a>
 <a href="/" class="btn btn-outline-secondary">Return to Portal</a>
 
 </body>

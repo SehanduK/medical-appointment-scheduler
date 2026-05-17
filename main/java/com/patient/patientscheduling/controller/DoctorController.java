@@ -15,18 +15,15 @@ public class DoctorController {
     @Autowired
     private DoctorRepository doctorRepository;
 
-    @PostMapping("/select-specialty")
-    public String getDoctors(@RequestParam("specialty") String specialty, Model model) {
+    @PostMapping("/select-department")
+    public String getDoctors(@RequestParam("departmentId") Long departmentId, Model model) {
 
-        List<Doctor> foundDoctors = doctorRepository.findBySpecialization(specialty);
+        List<Doctor> foundDoctors = doctorRepository.findByDepartmentId(departmentId);
 
-
-        System.out.println("Searching for: " + specialty);
+        System.out.println("Searching for department ID: " + departmentId);
         System.out.println("Doctors found: " + foundDoctors.size());
 
-
         model.addAttribute("doctors", foundDoctors);
-        model.addAttribute("selectedSpecialty", specialty);
 
         return "channeling";
     }
