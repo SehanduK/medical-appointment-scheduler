@@ -1,41 +1,167 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Add Patient</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* ── Top Header (matches your Patient List page) ── */
+        .header {
+            background: linear-gradient(135deg, #1a73e8, #4fa3f7);
+            color: white;
+            padding: 28px 40px;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        .header p {
+            margin: 4px 0 0;
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        /* ── Card ── */
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 520px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-top: 6px solid #28a745;
+        }
+        .form-card h2 {
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: #1a1a2e;
+        }
+
+        /* ── Inputs ── */
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .form-control {
+            border-radius: 10px;
+            border: 1.5px solid #ced4da;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
+        }
+
+        /* ── Save Button ── */
+        .btn-save {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 11px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        .btn-save:hover {
+            background: #1558b0;
+            color: white;
+        }
+
+        /* ── Back Link ── */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Add Patient</h2>
+<!-- Header (same style as Patient List) -->
+<div class="header">
+    <h1>🫀 Patient Management System</h1>
+    <p>Manage patient information easily</p>
+</div>
 
-<form action="#" th:action="@{/savePatient}" th:object="${patient}" method="POST">
+<!-- Form Card -->
+<div class="form-card">
+    <h2>➕ Add Patient</h2>
 
-    Name:
-    <input type="text" th:field="*{name}" />
-    <br><br>
+    <form th:action="@{/savePatient}" th:object="${patient}" method="post">
 
-    Age:
-    <input type="number"
-           th:field="*{age}"
-           min="1"
-           max="99"
-           oninput="if(this.value.length > 2) this.value = this.value.slice(0,2)" />
-    <br><br>
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" th:field="*{name}" class="form-control"
+                   placeholder="Enter full name" id="field-name"
+                   onkeydown="moveNext(event, 'field-age')">
+        </div>
 
-    Gender:
-    <input type="text" th:field="*{gender}" />
-    <br><br>
+        <div class="mb-3">
+            <label class="form-label">Age</label>
+            <input type="number" th:field="*{age}" class="form-control"
+                   placeholder="Enter age" id="field-age"
+                   onkeydown="moveNext(event, 'field-gender')">
+        </div>
 
-    Contact:
-    <input type="text"
-           th:field="*{contact}"
-           maxlength="10"
-           pattern="[0-9]{10}"
-           title="Contact number must be 10 digits" />
-    <br><br>
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <select th:field="*{gender}" class="form-control"
+                    id="field-gender"
+                    onkeydown="moveNext(event, 'field-contact')">
+                <option value="">-- Select Gender --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
 
-    <button type="submit">Save</button>
+        <div class="mb-4">
+            <label class="form-label">Contact</label>
+            <input type="text" th:field="*{contact}" class="form-control"
+                   placeholder="Enter contact number" id="field-contact"
+                   onkeydown="submitOnEnter(event)">
+        </div>
 
-</form>
+        <button type="submit" class="btn-save">💾 Save Patient</button>
+    </form>
+
+    <a th:href="@{/}" class="back-link">← Back to Patient List</a>
+</div>
+
+<script>
+    // Press Enter → move to next field
+    function moveNext(event, nextId) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById(nextId).focus();
+        }
+    }
+
+    // Press Enter on last field → submit form
+    function submitOnEnter(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            event.target.closest('form').submit();
+        }
+    }
+</script>
 
 </body>
 </html>
