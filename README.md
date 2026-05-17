@@ -4,7 +4,7 @@ Project - Medical appointment scheduling system
 
 This Medical Appointment Scheduling System is a web-based application designed to manage and schedule doctor appointments efficiently. The system allows patients to view available doctors, check their schedules, and book appointments at convenient times. 
 
-(NOTE : This is a brief explanation about the system that I got from the AI,so we can get an idea about how this system works. Finally we should discuss and add more things to develop it as well.)
+(NOTE : This is a brief explanation about the system,so we can get an idea about how this system works. Finally we should discuss and add more things to develop it as well.)
 
 
 Main Purpose
@@ -23,7 +23,7 @@ Main Users
 1. Patients
 
 I. Register and log in  
-II. View doctors and available time slots   
+II. View doctors and available doctors  
 III. Book or cancel appointments   
 
 2. Doctors
@@ -57,4 +57,4 @@ Frontend: HTML, CSS, JavaScript
 Backend: PHP / Node.js / Python   
 Database: MySQL   
 
-(NOTE : This is an examples that recommended from the AI and I think we're gonna use these same languages anyway. )
+
