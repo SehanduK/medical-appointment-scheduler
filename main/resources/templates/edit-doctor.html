@@ -30,7 +30,7 @@
                         <div class="fw-bold text-primary" th:text="${doc.name}"></div>
                     </td>
                     <td>
-                        <span class="text-muted" th:text="${doc.specialization}"></span>
+                        <span class="text-muted" th:text="${doc.department != null ? doc.department.name : 'N/A'}"></span>
                     </td>
                     <td class="text-center">
 
