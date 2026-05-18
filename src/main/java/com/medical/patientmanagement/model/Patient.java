@@ -2,7 +2,7 @@ package com.medical.patientmanagement.model;
 
 import jakarta.persistence.*;
 
-@Entity
+@Entity //Tells Spring Boot to create a table
 @Table(name = "patients")
 public class Patient {
 
